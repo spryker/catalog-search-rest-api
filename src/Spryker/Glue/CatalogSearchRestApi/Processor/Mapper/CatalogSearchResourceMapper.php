@@ -227,6 +227,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
             if ($searchResultDataItem instanceof ArrayObject) {
                 foreach ($searchResultDataItem as $arrayObjectMember) {
                     /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $arrayObjectMember */
+                    /** @phpstan-ignore instanceof.alwaysTrue */
                     if (!$arrayObjectMember instanceof TransferInterface) {
                         $convertedSearchResult[$searchResultDataIndex][] = $arrayObjectMember;
 

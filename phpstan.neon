@@ -2,4 +2,5 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.iterableValue
+        - '#PHPDoc tag @Glue has invalid value#'
     level: 8
