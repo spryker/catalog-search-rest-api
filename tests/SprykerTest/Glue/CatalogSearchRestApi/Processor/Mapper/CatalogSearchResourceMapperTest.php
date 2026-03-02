@@ -87,9 +87,6 @@ class CatalogSearchResourceMapperTest extends Unit
      */
     protected $currencyClientMock;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -102,9 +99,6 @@ class CatalogSearchResourceMapperTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testMapperWillReturnNotEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
@@ -170,9 +164,6 @@ class CatalogSearchResourceMapperTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testMapperWillReturnEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
@@ -192,9 +183,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS] ?? $this->restSearchAttributesTransfer[static::KEY_PRODUCTS];
     }
 
-    /**
-     * @return array
-     */
     protected function mockRestSearchResponseTransfer(): array
     {
         $mockRestSearchResponse = [];
@@ -207,9 +195,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $mockRestSearchResponse;
     }
 
-    /**
-     * @return void
-     */
     protected function mockCurrencyClient(): void
     {
         $this->currencyClientMock = $this->getMockBuilder(CurrencyClient::class)->getMock();
@@ -218,9 +203,6 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->currencyClientMock->method('getCurrent')->willReturn($currencyTransfer);
     }
 
-    /**
-     * @return array
-     */
     protected function mockEmptyRestSearchResponseTransfer(): array
     {
         $mockRestSearchResponse = [];
@@ -232,9 +214,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $mockRestSearchResponse;
     }
 
-    /**
-     * @return array
-     */
     protected function mockProducts(): array
     {
         $products = [];
@@ -265,9 +244,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $products;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\SortSearchResultTransfer
-     */
     protected function mockSort(): SortSearchResultTransfer
     {
         $sort = new SortSearchResultTransfer();
@@ -284,9 +260,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $sort;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\PaginationSearchResultTransfer
-     */
     protected function mockPagination(): PaginationSearchResultTransfer
     {
         $pagination = new PaginationSearchResultTransfer();
@@ -298,9 +271,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $pagination;
     }
 
-    /**
-     * @return array
-     */
     protected function mockFacets(): array
     {
         $pagination = [];
@@ -310,9 +280,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $pagination;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer
-     */
     protected function mockLabelFacetSearchResult(): FacetSearchResultTransfer
     {
         $facetSearchResultTransfer = new FacetSearchResultTransfer();
@@ -343,9 +310,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $facetSearchResultTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\RangeSearchResultTransfer
-     */
     protected function mockRatingFacetSearchResult(): RangeSearchResultTransfer
     {
         $facetSearchResultTransfer = new RangeSearchResultTransfer();
@@ -369,9 +333,6 @@ class CatalogSearchResourceMapperTest extends Unit
         return $facetSearchResultTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
-     */
     protected function getPriceModeInformation(): PriceModeConfigurationTransfer
     {
         return (new PriceModeConfigurationTransfer())

@@ -30,11 +30,6 @@ class CatalogSearchRestApiToCurrencyClientBridge implements CatalogSearchRestApi
         return $this->currencyClient->getCurrent();
     }
 
-    /**
-     * @param string $currencyIsoCode
-     *
-     * @return void
-     */
     public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void
     {
         $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);

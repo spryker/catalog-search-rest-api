@@ -26,21 +26,12 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
      */
     protected $catalogSearchRestApiConfig;
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig $catalogSearchRestApiConfig
-     */
     public function __construct(RestResourceBuilderInterface $restResourceBuilder, CatalogSearchRestApiConfig $catalogSearchRestApiConfig)
     {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->catalogSearchRestApiConfig = $catalogSearchRestApiConfig;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
-     */
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         if ($restRequest->getResource()->getType() !== CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH) {
@@ -87,11 +78,6 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
         return true;
     }
 
-    /**
-     * @param string $requestParameterName
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
     protected function createErrorMessageTransfer(string $requestParameterName): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())

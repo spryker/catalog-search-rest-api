@@ -59,9 +59,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
      */
     protected const SEARCH_RESPONSE_ID_CATEGORY_KEY = 'id_category';
 
-    /**
-     * @return array
-     */
     public function getEmptySearchResponse(): array
     {
         return [
@@ -74,11 +71,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         ];
     }
 
-    /**
-     * @param array $restSearchResponse
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     public function mapSuggestionsToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchSuggestionsAttributesTransfer
     {
         $restSuggestionsAttributesTransfer = new RestCatalogSearchSuggestionsAttributesTransfer();
@@ -89,12 +81,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $restSuggestionsAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restSuggestionsAttributesTransfer
-     * @param array $restSearchResponse
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     protected function mapCustomFields(
         RestCatalogSearchSuggestionsAttributesTransfer $restSuggestionsAttributesTransfer,
         array $restSearchResponse
@@ -106,12 +92,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $restSuggestionsAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
-     * @param array $restSearchResponse
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     protected function mapProductSuggestions(
         RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer,
         array $restSearchResponse
@@ -122,12 +102,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
-     * @param array $restSearchResponse
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     protected function mapCategorySuggestions(
         RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer,
         array $restSearchResponse
@@ -149,12 +123,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $restSearchSuggestionsAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
-     * @param array $restSearchResponse
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     protected function mapCmsPageSuggestions(
         RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer,
         array $restSearchResponse
@@ -173,13 +141,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $restSearchSuggestionsAttributesTransfer;
     }
 
-    /**
-     * @param array $restSearchResponse
-     * @param string $suggestionName
-     * @param array $suggestionKeysRequired
-     *
-     * @return array
-     */
     protected function mapSuggestions(array $restSearchResponse, string $suggestionName, array $suggestionKeysRequired): array
     {
         $result = [];
@@ -196,12 +157,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $result;
     }
 
-    /**
-     * @param array $restSearchResponse
-     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     protected function mapSearchSuggestionProductsToRestCatalogSearchSuggestionsAttributesTransfer(
         array $restSearchResponse,
         RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
@@ -226,12 +181,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $restSearchSuggestionsAttributesTransfer;
     }
 
-    /**
-     * @param array $source
-     * @param array $keysRequired
-     *
-     * @return array
-     */
     protected function mapArrayValuesByKeys(array $source, array $keysRequired): array
     {
         $result = [];
@@ -244,24 +193,12 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         return $result;
     }
 
-    /**
-     * @param array $restSearchResponse
-     * @param string $checkKey
-     *
-     * @return bool
-     */
     protected function checkSuggestionByTypeValues(array $restSearchResponse, string $checkKey): bool
     {
         return isset($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$checkKey])
             && is_array($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$checkKey]);
     }
 
-    /**
-     * @param array $suggestions
-     * @param array $keys
-     *
-     * @return bool
-     */
     protected function checkSuggestionsValuesExists(array $suggestions, array $keys): bool
     {
         return !array_diff_key(array_flip($keys), $suggestions);

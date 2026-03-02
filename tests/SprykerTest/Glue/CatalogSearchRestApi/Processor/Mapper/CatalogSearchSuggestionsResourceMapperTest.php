@@ -58,9 +58,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
      */
     protected $catalogSearchSuggestionsResourceMapper;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -68,9 +65,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         $this->catalogSearchSuggestionsResourceMapper = new CatalogSearchSuggestionsResourceMapper();
     }
 
-    /**
-     * @return void
-     */
     public function testRestResponseAttributesIsInstanceOfRestSearchSuggestionsAttributesTransfer(): void
     {
         $mapper = $this->getMapper();
@@ -79,9 +73,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         $this->assertInstanceOf(RestCatalogSearchSuggestionsAttributesTransfer::class, $restCatalogSearchSuggestionsAttributes);
     }
 
-    /**
-     * @return void
-     */
     public function testEmptySearchSuggestionsResponseWillMapEmptyAttributes(): void
     {
         $mapper = $this->getMapper();
@@ -97,9 +88,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         $this->assertEmpty($attributes->getCmsPageCollection());
     }
 
-    /**
-     * @return void
-     */
     public function testRestSearchSuggestionsResponseAttributesContainsCorrectData(): void
     {
         $mapper = $this->getMapper();
@@ -144,28 +132,17 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restCatalogSearchSuggestionsAttributes
-     *
-     * @return \ArrayObject
-     */
     protected function getProductsFromRestCatalogSearchAttributesTransfer(
         RestCatalogSearchSuggestionsAttributesTransfer $restCatalogSearchSuggestionsAttributes
     ): ArrayObject {
         return $restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS] ?? $restCatalogSearchSuggestionsAttributes[static::KEY_PRODUCTS];
     }
 
-    /**
-     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface
-     */
     protected function getMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
         return $this->catalogSearchSuggestionsResourceMapper;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->restSearchSuggestionsResponseMock;

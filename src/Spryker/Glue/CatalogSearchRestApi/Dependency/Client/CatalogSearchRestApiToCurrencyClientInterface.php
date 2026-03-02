@@ -14,11 +14,6 @@ interface CatalogSearchRestApiToCurrencyClientInterface
      */
     public function getCurrent();
 
-    /**
-     * @param string $currencyIsoCode
-     *
-     * @return void
-     */
     public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
 
     /**

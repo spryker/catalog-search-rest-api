@@ -27,20 +27,11 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
      */
     protected $glossaryStorageClient;
 
-    /**
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     */
     public function __construct(CatalogSearchRestApiToGlossaryStorageClientInterface $glossaryStorageClient)
     {
         $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
-     * @param string $localName
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     public function addTranslations(
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         string $localName
@@ -51,12 +42,6 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
         return $restCatalogSearchAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
-     * @param string $localName
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     protected function addSortParamTranslation(
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         string $localName
@@ -77,12 +62,6 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
         return $restCatalogSearchAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
-     * @param string $localName
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     protected function addFacetNameTranslation(
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         string $localName

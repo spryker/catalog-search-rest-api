@@ -11,15 +11,7 @@ use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 
 interface CatalogSearchSuggestionsResourceMapperInterface
 {
-    /**
-     * @param array $restSearchResponse
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
-     */
     public function mapSuggestionsToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchSuggestionsAttributesTransfer;
 
-    /**
-     * @return array
-     */
     public function getEmptySearchResponse(): array;
 }

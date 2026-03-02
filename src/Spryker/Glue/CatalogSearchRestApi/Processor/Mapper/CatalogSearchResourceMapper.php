@@ -47,19 +47,11 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      */
     protected static $currencyTransfer;
 
-    /**
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
-     */
     public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
     {
         $this->currencyClient = $currencyClient;
     }
 
-    /**
-     * @param array $searchResult
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     public function mapSearchResultToRestAttributesTransfer(array $searchResult): RestCatalogSearchAttributesTransfer
     {
         $convertedSearchResult = $this->convertSearchResultToArray($searchResult);
@@ -81,12 +73,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return $restSearchAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
-     * @param array $searchResult
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     protected function mapSearchResponseProductsToRestCatalogSearchAttributesTransfer(
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         array $searchResult
@@ -104,12 +90,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return $restCatalogSearchAttributesTransfer;
     }
 
-    /**
-     * @param array $facets
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(
         array $facets,
         RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
@@ -132,11 +112,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return $restSearchAttributesTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestFacetConfigTransfer
-     */
     protected function mapFacetConfigTransferToRestFacetConfigTransfer(FacetConfigTransfer $facetConfigTransfer): RestFacetConfigTransfer
     {
         $restFacetConfigTransfer = (new RestFacetConfigTransfer())->fromArray($facetConfigTransfer->toArray(), true);
@@ -145,12 +120,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return $restFacetConfigTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
-     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
-     *
-     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
-     */
     public function mapPrices(
         RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer,
         PriceModeConfigurationTransfer $priceModeInformation
@@ -170,13 +139,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return $restSearchAttributesTransfer;
     }
 
-    /**
-     * @param string $priceType
-     * @param int $price
-     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
-     *
-     * @return \Generated\Shared\Transfer\RestPriceProductTransfer
-     */
     protected function getPriceTransfer(
         string $priceType,
         int $price,
@@ -203,9 +165,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return $restPriceProductTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
     protected function getCurrencyTransfer(): CurrencyTransfer
     {
         if (!static::$currencyTransfer) {
@@ -215,11 +174,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         return static::$currencyTransfer;
     }
 
-    /**
-     * @param array $searchResult
-     *
-     * @return array
-     */
     protected function convertSearchResultToArray(array $searchResult): array
     {
         $convertedSearchResult = [];

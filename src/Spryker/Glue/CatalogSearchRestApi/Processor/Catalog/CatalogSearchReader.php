@@ -84,15 +84,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected $catalogSearchTranslationExpander;
 
-    /**
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface $catalogClient
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface $priceClient
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface $catalogSearchResourceMapper
-     * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface $catalogSearchSuggestionsResourceMapper
-     * @param \Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface $catalogSearchTranslationExpander
-     */
     public function __construct(
         CatalogSearchRestApiToCatalogClientInterface $catalogClient,
         CatalogSearchRestApiToPriceClientInterface $priceClient,
@@ -111,11 +102,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $this->catalogSearchTranslationExpander = $catalogSearchTranslationExpander;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function catalogSearch(RestRequestInterface $restRequest): RestResponseInterface
     {
         $this->setGlobalCurrencyContext($restRequest);
@@ -137,11 +123,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         return $this->buildCatalogSearchResponse($restRequest, $restSearchAttributesTransfer);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function catalogSuggestionsSearch(RestRequestInterface $restRequest): RestResponseInterface
     {
         $this->setGlobalCurrencyContext($restRequest);
@@ -167,22 +148,11 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         return $response->addResource($restResource);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $parameterName
-     *
-     * @return string
-     */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
         return (string)$restRequest->getHttpRequest()->query->get($parameterName);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array
-     */
     protected function getAllRequestParameters(RestRequestInterface $restRequest): array
     {
         $params = $restRequest->getHttpRequest()->query->all();
@@ -194,11 +164,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         return $params;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return void
-     */
     protected function setGlobalCurrencyContext(RestRequestInterface $restRequest): void
     {
         $currencyIsoCode = $this->getRequestParameter($restRequest, static::PARAMETER_NAME_CURRENCY);
@@ -210,11 +175,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function createEmptyResponse(RestResponseInterface $response): RestResponseInterface
     {
         $restSuggestionsAttributesTransfer = $this
@@ -232,9 +192,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         return $response->addResource($restResource);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
-     */
     protected function getPriceModeConfigurationTransfer(): PriceModeConfigurationTransfer
     {
         $priceModeConfiguration = new PriceModeConfigurationTransfer();
@@ -246,12 +203,6 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         return $priceModeConfiguration;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function buildCatalogSearchResponse(
         RestRequestInterface $restRequest,
         RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
