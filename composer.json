@@ -16,11 +16,15 @@
         "spryker/transfer": "^3.42.0"
     },
     "require-dev": {
+        "spryker/api-platform": "*",
         "spryker/code-sniffer": "*",
         "spryker/product-label-storage": "*",
         "spryker/product-review": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/api-platform": "If you want to use API Platform for REST API endpoints."
     },
     "autoload": {
         "psr-4": {

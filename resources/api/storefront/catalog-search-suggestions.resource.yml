@@ -1,0 +1,118 @@
+resource:
+    name: CatalogSearchSuggestions
+    shortName: catalog-search-suggestions
+    description: 'Search suggestions for autocomplete'
+
+    provider: Spryker\Glue\CatalogSearchRestApi\Api\Storefront\Provider\CatalogSearchSuggestionsStorefrontProvider
+
+    paginationEnabled: false
+
+    operations:
+        - type: GetCollection
+          uriTemplate: /catalog-search-suggestions
+          description: 'Get search suggestions for autocomplete'
+
+    includes:
+        - relationshipName: abstract-products
+          resolverClass: Spryker\Glue\ProductsRestApi\Api\Storefront\Relationship\AbstractProductsRelationshipResolver
+
+    properties:
+        catalogSearchSuggestionId:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            required: false
+            description: 'Catalog search suggestion identifier'
+            openapiContext:
+                example: '0'
+
+        completion:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Completion suggestions'
+            openapiContext:
+                example:
+                    - 'lenovo'
+                    - 'lenovo essential g50-80'
+                    - 'lenovo thinkcenter e73'
+                    - 'lenovo yoga tablet 3'
+                    - 'lenovo bundle'
+
+        abstractProducts:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Suggested abstract products'
+            openapiContext:
+                example:
+                    - abstractSku: '213'
+                      abstractName: 'Lenovo Bundle'
+                      url: '/en/lenovo-bundle-213'
+                      price: 35000
+                      images:
+                          - externalUrlLarge: 'https://example.com/images/large/lenovo-bundle.jpg'
+                            externalUrlSmall: 'https://example.com/images/medium/lenovo-bundle.jpg'
+                    - abstractSku: '172'
+                      abstractName: 'Lenovo Yoga Tablet 3'
+                      url: '/en/lenovo-yoga-tablet-3-172'
+                      price: 1988
+                      images:
+                          - externalUrlLarge: 'https://example.com/images/large/lenovo-yoga-tablet-3.jpg'
+                            externalUrlSmall: 'https://example.com/images/medium/lenovo-yoga-tablet-3.jpg'
+
+        categories:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Suggested categories'
+            openapiContext:
+                example:
+                    - name: 'Tablets'
+                      url: '/en/computer/tablets'
+
+        cmsPages:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Suggested CMS pages'
+            openapiContext:
+                example:
+                    - name: 'Demo Landing Page'
+                      url: '/en/demo-landing-page'
+                    - name: 'GTC'
+                      url: '/en/gtc'
+                    - name: 'Imprint'
+                      url: '/en/imprint'
+
+        categoryCollection:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Category suggestion collection with details'
+            openapiContext:
+                example:
+                    - idCategory: 8
+                      name: 'Tablets'
+                      url: '/en/computer/tablets'
+
+        cmsPageCollection:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'CMS page suggestion collection with details'
+            openapiContext:
+                example:
+                    - name: 'Demo Landing Page'
+                      url: '/en/demo-landing-page'
+                    - name: 'GTC'
+                      url: '/en/gtc'
+                    - name: 'Imprint'
+                      url: '/en/imprint'

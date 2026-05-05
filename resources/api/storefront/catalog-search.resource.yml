@@ -1,0 +1,253 @@
+resource:
+    name: CatalogSearch
+    shortName: catalog-search
+    description: 'Full-text catalog search with facets, sorting, and pagination'
+
+    provider: Spryker\Glue\CatalogSearchRestApi\Api\Storefront\Provider\CatalogSearchStorefrontProvider
+
+    paginationEnabled: true
+    paginationItemsPerPage: 12
+
+    operations:
+        - type: GetCollection
+          uriTemplate: /catalog-search
+          description: 'Search the product catalog'
+
+    includes:
+        - relationshipName: abstract-products
+          resolverClass: Spryker\Glue\ProductsRestApi\Api\Storefront\Relationship\AbstractProductsRelationshipResolver
+
+    properties:
+        catalogSearchId:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            required: false
+            description: 'Catalog search identifier'
+            openapiContext:
+                example: '0'
+
+        sort:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Sorting options and current sort state'
+            openapiContext:
+                example:
+                    sortParamNames:
+                        - rating
+                        - name_asc
+                        - name_desc
+                        - price_asc
+                        - price_desc
+                        - popularity
+                    currentSortParam: null
+                    currentSortOrder: null
+                    sortParamLocalizedNames:
+                        rating: 'Sort by product ratings'
+                        name_asc: 'Sort by name ascending'
+                        name_desc: 'Sort by name descending'
+                        price_asc: 'Sort by price ascending'
+                        price_desc: 'Sort by price descending'
+                        popularity: 'Sort by popularity'
+
+        pagination:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Pagination details including total items, current page, and items per page'
+            openapiContext:
+                example:
+                    numFound: 223
+                    currentPage: 2
+                    maxPage: 19
+                    currentItemsPerPage: 12
+                    config:
+                        parameterName: 'page'
+                        itemsPerPageParameterName: 'ipp'
+                        defaultItemsPerPage: 12
+                        validItemsPerPageOptions: [12, 24, 36]
+                        maxItemsPerPage: null
+
+        abstractProducts:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'List of matching abstract products'
+            openapiContext:
+                example:
+                    - images:
+                          - idProductImage: 415
+                            productImageKey: 'product_image_415'
+                            externalUrlSmall: 'https://example.com/images/medium/sony-nex-vg20eh.jpg'
+                            externalUrlLarge: 'https://example.com/images/large/sony-nex-vg20eh.jpg'
+                            createdAt: '2026-04-28 15:33:56.000000'
+                            idProductImageSetToProductImage: 415
+                            uuid: '846b5d31-eacc-5cf5-b73a-e3c58ee22b05'
+                            altTextLarge: ''
+                            fkProductImageSet: 415
+                            altTextSmall: ''
+                            updatedAt: '2026-04-28 15:33:56.000000'
+                            sortOrder: 0
+                            fkProductImage: 415
+                      idProductLabels: []
+                      price: 20254
+                      abstractName: 'Sony NEX-VG20EH'
+                      idProductAbstract: 201
+                      type: 'product_abstract'
+                      addToCartSku: '201_11217755'
+                      prices:
+                          - priceTypeName: 'DEFAULT'
+                            currency:
+                                code: 'EUR'
+                                symbol: '€'
+                                idCurrency: null
+                                name: 'Euro'
+                                isDefault: true
+                                fractionDigits: 2
+                            DEFAULT: 20254
+                            grossAmount: 20254
+                      abstractSku: '201'
+                      url: '/en/sony-nex-vg20eh-201'
+
+        valueFacets:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Value-based facet filters'
+            openapiContext:
+                example:
+                    - name: 'brand'
+                      docCount: null
+                      activeValue: null
+                      config:
+                          name: 'brand'
+                          parameterName: 'brand'
+                          fieldName: 'string-facet'
+                          type: 'enumeration'
+                          aggregationParams: []
+                          isMultiValued: false
+                          valueTransformer: null
+                          shortParameterName: null
+                          size: null
+                      values:
+                          - value: 'Samsung'
+                            docCount: 46
+                          - value: 'Sony'
+                            docCount: 42
+                          - value: 'Canon'
+                            docCount: 29
+                      localizedName: 'Brand'
+                    - name: 'label'
+                      docCount: null
+                      activeValue: null
+                      config:
+                          name: 'label'
+                          parameterName: 'label'
+                          fieldName: 'string-facet'
+                          type: 'enumeration'
+                          aggregationParams: []
+                          isMultiValued: true
+                          valueTransformer: 'Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetValueTransformerPlugin'
+                          shortParameterName: null
+                          size: null
+                      values:
+                          - value: 'SALE %'
+                            docCount: 64
+                          - value: 'Standard Label'
+                            docCount: 48
+                      localizedName: 'Product Labels'
+
+        rangeFacets:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Range-based facet filters'
+            openapiContext:
+                example:
+                    - name: 'price-DEFAULT-EUR-GROSS_MODE'
+                      min: 0
+                      max: 345699
+                      activeMin: 0
+                      activeMax: 345699
+                      docCount: null
+                      config:
+                          name: 'price-DEFAULT-EUR-GROSS_MODE'
+                          parameterName: 'price'
+                          fieldName: 'integer-facet'
+                          type: 'price-range'
+                          aggregationParams: []
+                          isMultiValued: false
+                          valueTransformer: null
+                          shortParameterName: null
+                          size: null
+                      localizedName: 'Price range'
+                    - name: 'rating'
+                      min: 4
+                      max: 5
+                      activeMin: 4
+                      activeMax: 5
+                      docCount: null
+                      config:
+                          name: 'rating'
+                          parameterName: 'rating'
+                          fieldName: 'integer-facet'
+                          type: 'range'
+                          aggregationParams: []
+                          isMultiValued: false
+                          valueTransformer: 'Spryker\Client\ProductReview\Plugin\ProductRatingValueTransformer'
+                          shortParameterName: null
+                          size: null
+                      localizedName: 'Product Ratings'
+
+        spellingSuggestion:
+            type: string
+            writable: false
+            readable: true
+            required: false
+            description: 'Spelling suggestion for the search query'
+            openapiContext:
+                example: null
+
+        categoryTreeFilter:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Category tree filter options'
+            openapiContext:
+                example:
+                    - idCategory: 5
+                      nodeId: 5
+                      name: 'Computer'
+                      url: '/en/computer'
+                      isActive: true
+                      image: null
+                      templatePath: '@CatalogPage/views/simple-cms-block/simple-cms-block.twig'
+                      order: 100
+                      metaTitle: 'Computer'
+                      metaDescription: 'Computer'
+                      metaKeywords: 'Computer'
+                      docCount: 72
+                      parents: []
+                      children:
+                          - idCategory: 6
+                            nodeId: 6
+                            name: 'Notebooks'
+                            url: '/en/computer/notebooks'
+                            isActive: true
+                            image: null
+                            templatePath: '@CatalogPage/views/catalog-with-cms-slot/catalog-with-cms-slot.twig'
+                            order: 100
+                            metaTitle: 'Notebooks'
+                            metaDescription: 'Notebooks'
+                            metaKeywords: 'Notebooks'
+                            docCount: 24
+                            parents: []
+                            children: []
