@@ -154,4 +154,7 @@
     <transfer name="Currency">
     </transfer>
 
+    <transfer name="ProductCategoryFilterStorage">
+        <property name="filterData" type="array" singular="filterData"/>
+    </transfer>
 </transfers>

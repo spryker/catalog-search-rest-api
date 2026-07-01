@@ -10,12 +10,16 @@ declare(strict_types=1);
 namespace Spryker\Glue\CatalogSearchRestApi\Api\Storefront\Provider;
 
 use Generated\Api\Storefront\CatalogSearchStorefrontResource;
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
+use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
 use Spryker\ApiPlatform\State\Provider\AbstractStorefrontProvider;
 use Spryker\Client\Catalog\CatalogClientInterface;
 use Spryker\Client\Currency\CurrencyClientInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
 use Spryker\Client\Price\PriceClientInterface;
+use Spryker\Client\ProductCategoryFilter\ProductCategoryFilterClientInterface;
+use Spryker\Client\ProductCategoryFilterStorage\ProductCategoryFilterStorageClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Api\Storefront\Mapper\CatalogSearchResourceMapperInterface;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Service\Serializer\SerializerServiceInterface;
@@ -34,6 +38,14 @@ class CatalogSearchStorefrontProvider extends AbstractStorefrontProvider
 
     protected const string GLOSSARY_FACET_NAME_KEY_PREFIX = 'product.filter.';
 
+    /**
+     * @uses \Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\FacetSearchHttpResultFormatterPlugin::FACET_RESULT_NAME
+     * @uses \Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\FacetResultFormatterPlugin::NAME
+     *
+     * @var string
+     */
+    protected const string FACET_RESULT_NAME = 'facets';
+
     public function __construct(
         protected CatalogClientInterface $catalogClient,
         protected CurrencyClientInterface $currencyClient,
@@ -42,6 +54,8 @@ class CatalogSearchStorefrontProvider extends AbstractStorefrontProvider
         protected CatalogSearchRestApiConfig $catalogSearchRestApiConfig,
         protected SerializerServiceInterface $serializer,
         protected CatalogSearchResourceMapperInterface $catalogSearchResourceMapper,
+        protected ProductCategoryFilterClientInterface $productCategoryFilterClient,
+        protected ProductCategoryFilterStorageClientInterface $productCategoryFilterStorageClient,
     ) {
     }
 
@@ -67,6 +81,7 @@ class CatalogSearchStorefrontProvider extends AbstractStorefrontProvider
         }
 
         $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
+        $searchResult = $this->updateFacetFiltersByCategory($searchResult, $requestParameters);
         $locale = $this->getLocale()->getLocaleNameOrFail();
 
         $currencyTransfer = $this->currencyClient->getCurrent();
@@ -92,6 +107,46 @@ class CatalogSearchStorefrontProvider extends AbstractStorefrontProvider
         }
 
         $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);
+    }
+
+    /**
+     * @param array<string, mixed> $searchResult
+     * @param array<string, mixed> $requestParameters
+     *
+     * @return array<string, mixed>
+     */
+    protected function updateFacetFiltersByCategory(array $searchResult, array $requestParameters): array
+    {
+        if (!isset($searchResult[static::FACET_RESULT_NAME], $requestParameters[PageIndexMap::CATEGORY])) {
+            return $searchResult;
+        }
+
+        $idCategory = (int)$requestParameters[PageIndexMap::CATEGORY];
+        $productCategoryFilterStorageTransfer = $this->productCategoryFilterStorageClient->getProductCategoryFilterByIdCategory($idCategory);
+        if ($productCategoryFilterStorageTransfer === null) {
+            return $searchResult;
+        }
+
+        $searchResult[static::FACET_RESULT_NAME] = $this->productCategoryFilterClient->updateFacetsByCategory(
+            $searchResult[static::FACET_RESULT_NAME],
+            $this->getCategoryFilters($productCategoryFilterStorageTransfer),
+        );
+
+        return $searchResult;
+    }
+
+    /**
+     * @return array<string, bool>
+     */
+    protected function getCategoryFilters(ProductCategoryFilterStorageTransfer $productCategoryFilterStorageTransfer): array
+    {
+        $categoryFilters = [];
+        $filterData = $productCategoryFilterStorageTransfer->getFilterData();
+        foreach ($filterData['filters'] ?? [] as $filter) {
+            $categoryFilters[$filter['key']] = $filter['isActive'];
+        }
+
+        return $categoryFilters;
     }
 
     /**
