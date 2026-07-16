@@ -29,48 +29,97 @@ resource:
                 example: '0'
 
         sort:
-            type: array
+            type: object
+            objectName: CatalogSearchSort
             writable: false
             readable: true
             required: false
             description: 'Sorting options and current sort state'
-            openapiContext:
-                example:
-                    sortParamNames:
-                        - rating
-                        - name_asc
-                        - name_desc
-                        - price_asc
-                        - price_desc
-                        - popularity
-                    currentSortParam: null
-                    currentSortOrder: null
-                    sortParamLocalizedNames:
-                        rating: 'Sort by product ratings'
-                        name_asc: 'Sort by name ascending'
-                        name_desc: 'Sort by name descending'
-                        price_asc: 'Sort by price ascending'
-                        price_desc: 'Sort by price descending'
-                        popularity: 'Sort by popularity'
+            properties:
+                sortParamNames:
+                    type: array
+                    description: 'Available sort parameter names.'
+                    openapiContext:
+                        example: [rating, name_asc, name_desc, price_asc, price_desc, popularity]
+                currentSortParam:
+                    type: string
+                    description: 'Currently applied sort parameter.'
+                    openapiContext:
+                        example: null
+                currentSortOrder:
+                    type: string
+                    description: 'Currently applied sort order.'
+                    openapiContext:
+                        example: null
+                sortParamLocalizedNames:
+                    type: map
+                    description: 'Localized labels keyed by sort parameter name.'
+                    openapiContext:
+                        example:
+                            rating: 'Sort by product ratings'
+                            name_asc: 'Sort by name ascending'
+                            name_desc: 'Sort by name descending'
+                            price_asc: 'Sort by price ascending'
+                            price_desc: 'Sort by price descending'
+                            popularity: 'Sort by popularity'
 
         pagination:
-            type: array
+            type: object
+            objectName: Pagination
             writable: false
             readable: true
             required: false
             description: 'Pagination details including total items, current page, and items per page'
-            openapiContext:
-                example:
-                    numFound: 223
-                    currentPage: 2
-                    maxPage: 19
-                    currentItemsPerPage: 12
-                    config:
-                        parameterName: 'page'
-                        itemsPerPageParameterName: 'ipp'
-                        defaultItemsPerPage: 12
-                        validItemsPerPageOptions: [12, 24, 36]
-                        maxItemsPerPage: null
+            properties:
+                numFound:
+                    type: integer
+                    description: 'Total number of items found.'
+                    openapiContext:
+                        example: 223
+                currentPage:
+                    type: integer
+                    description: 'Current page number.'
+                    openapiContext:
+                        example: 2
+                maxPage:
+                    type: integer
+                    description: 'Total number of pages.'
+                    openapiContext:
+                        example: 19
+                currentItemsPerPage:
+                    type: integer
+                    description: 'Number of items per page.'
+                    openapiContext:
+                        example: 12
+                config:
+                    type: object
+                    description: 'Pagination configuration used to build the query.'
+                    properties:
+                        parameterName:
+                            type: string
+                            description: 'Query parameter name for the page number.'
+                            openapiContext:
+                                example: 'page'
+                        itemsPerPageParameterName:
+                            type: string
+                            description: 'Query parameter name for items per page.'
+                            openapiContext:
+                                example: 'ipp'
+                        defaultItemsPerPage:
+                            type: integer
+                            description: 'Default number of items per page.'
+                            openapiContext:
+                                example: 12
+                        validItemsPerPageOptions:
+                            type: array
+                            description: 'Allowed items-per-page options.'
+                            openapiContext:
+                                example: [12, 24, 36]
+                        maxItemsPerPage:
+                            type: integer
+                            description: 'Maximum allowed items per page.'
+                            openapiContext:
+                                example: null
 
         abstractProducts:
             type: array

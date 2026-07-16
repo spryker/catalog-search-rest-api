@@ -217,18 +217,18 @@ class CatalogSearchStorefrontProvider extends AbstractStorefrontProvider
 
     protected function addSortParamTranslations(CatalogSearchStorefrontResource $resource, string $locale): void
     {
-        if ($resource->sort === [] || !isset($resource->sort['sortParamNames'])) {
+        if ($resource->sort === null || $resource->sort->getSortParamNames() === null) {
             return;
         }
 
         $sortParamLocalizedNames = [];
 
-        foreach ($resource->sort['sortParamNames'] as $sortParamName) {
+        foreach ($resource->sort->getSortParamNames() as $sortParamName) {
             $sortParamLocalizedNames[$sortParamName] = $this->glossaryStorageClient
                 ->translate(static::GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX . $sortParamName, $locale);
         }
 
-        $resource->sort['sortParamLocalizedNames'] = $sortParamLocalizedNames;
+        $resource->sort->setSortParamLocalizedNames($sortParamLocalizedNames);
     }
 
     protected function addFacetNameTranslations(CatalogSearchStorefrontResource $resource, string $locale): void
