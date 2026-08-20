@@ -12,6 +12,12 @@ resource:
         - type: GetCollection
           uriTemplate: /catalog-search
           description: 'Search the product catalog'
+          openapiContext:
+              responses:
+                  200:
+                      description: 'The search result for the requested query.'
+                  400:
+                      description: 'A pagination request parameter is not an integer.'
 
     includes:
         - relationshipName: abstract-products

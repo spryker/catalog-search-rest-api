@@ -11,6 +11,10 @@ resource:
         - type: GetCollection
           uriTemplate: /catalog-search-suggestions
           description: 'Get search suggestions for autocomplete'
+          openapiContext:
+              responses:
+                  200:
+                      description: 'The suggestions for the requested query.'
 
     includes:
         - relationshipName: abstract-products
